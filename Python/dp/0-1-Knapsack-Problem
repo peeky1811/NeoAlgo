@@ -1,0 +1,26 @@
+'''
+n- number of objects
+W- Capacity of bag
+val[]- value/profit of n objects
+wt[] - wt of n objects
+k[][]-knapsack with n+1 rows and W+1 columns
+ 
+'''
+def knapsack(n, W, val, wt):
+    k=[[0 for x in range(W+1)] for y in range(n+1)]
+    
+    for i in range(n+1):
+        for w in range(W+1):
+            if i==0 or w==0:
+                k[i][w]=0
+            elif wt[i-1]<=w:
+                k[i][w]=max(k[i-1][w], k[i-1][w-wt[i-1]]+val[i-1])
+            else:
+                k[i][w]=k[i-1][w]
+    return k[n][W]
+
+n   = int(input())
+W   = int(input())
+val = list(map(int, input().split()))
+wt  = list(map(int, input().split()))
+print( knapsack(n, W, val, wt) )
